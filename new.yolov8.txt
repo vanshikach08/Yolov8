@@ -1,0 +1,46 @@
+%%capture
+!pip install super-gradients==3.1.0
+!pip install imutils
+!pip install pytube --upgrade
+!pip install ultralytics
+!pip install -q kaggle
+
+!pip install super_gradients
+
+from super_gradients.training import Trainer
+from super_gradients.training import dataloaders
+from super_gradients.training.dataloaders.dataloaders import coco_detection_yolo_format_train, coco_detection_yolo_format_val
+
+from IPython.display import clear_output
+
+from super_gradients.training.losses import PPYoloELoss
+from super_gradients.training.metrics import DetectionMetrics_050
+from super_gradients.training.models.detection_models.pp_yolo_e import PPYoloEPostPredictionCallback
+
+
+from super_gradients.training import models
+
+# Import necessary libraries
+from ultralytics import YOLO
+
+# The Kaggle API client expects this file to be in ~/.kaggle, so move it there.
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+
+# This permissions change avoids a warning on Kaggle tool startup.
+!chmod 600 ~/.kaggle/kaggle.json
+
+!kaggle datasets download -d slavkoprytula/aquarium-data-cots
+
+!unzip -q aquarium-data-cots.zip -d /content/dataset
+
+
+!ls /content/dataset
+
+# Unzip the downloaded Kaggle dataset
+!unzip -q aquarium-data-cots.zip -d /content/dataset
+
+# List files in the dataset directory to confirm extraction
+!ls /content/dataset
+
+
